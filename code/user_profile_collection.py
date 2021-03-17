@@ -2,6 +2,7 @@ import json
 import logging
 import os
 from pathlib import Path
+from tqdm import tqdm
 from twython import TwythonError, TwythonRateLimitError
 
 from util.Constants import GET_USER, GET_USER_TWEETS, USER_ID, FOLLOWERS, GET_FRIENDS_ID, FOLLOWING
@@ -16,7 +17,7 @@ from util.Constants import GET_FOLLOWERS_ID
 def get_user_ids_in_folder(samples_folder):
     user_ids = []
 
-    for news_id in os.listdir(samples_folder):
+    for news_id in tqdm(os.listdir(samples_folder), desc="checking folder {} for cascades".format(samples_folder)):
         news_dir = "{}/{}".format(samples_folder, news_id)
         #TODO: do we want retweets
         # tweets_dir = "{}/{}/tweets".format(samples_folder, news_id)
@@ -28,7 +29,6 @@ def get_user_ids_in_folder(samples_folder):
                 retweets_object = json.load(open("{}/{}".format(retweets_dir, retweet_file)))
                 if len(retweets_object["retweets"]) < 5:
                     continue
-                print(f'{len(retweets_object["retweets"])} retweets for story {news_id} propogated with tweet {retweet_file}')
                 for tweet_object in retweets_object["retweets"]:
                     user_ids.append([tweet_object["user"]["id"], tweet_object["id"], news_id])
                 # except:
