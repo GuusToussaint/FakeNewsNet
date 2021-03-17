@@ -4,7 +4,6 @@ import os
 import sys
 import logging
 from multiprocessing.pool import Pool
-from multiprocessing_logging import install_mp_handler
 
 from tqdm import tqdm
 
@@ -95,9 +94,7 @@ def equal_chunks(list, chunk_size):
 
 def multiprocess_data_collection(function_reference, data_list, args, config: Config):
     # Create process pool of pre defined size
-    logging.info("Dit is een 2de test")
-    install_mp_handler()
-    pool = Pool(config.num_process, initializer=install_mp_handler)
+    pool = Pool(config.num_process)
 
     pbar = tqdm(total=len(data_list))
 
