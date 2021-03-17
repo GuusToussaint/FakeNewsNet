@@ -16,7 +16,7 @@ keys_state = dict()
 
 def init_state(num_keys):
     print("No. of twitter keys : {}".format(num_keys))
-    keys_state["get_retweet"] = ResourceAllocator(num_keys, time_window=905, window_limit=75)
+    keys_state["get_retweet"] = ResourceAllocator(num_keys, time_window=905, window_limit=300)
     keys_state["get_tweet"] = ResourceAllocator(num_keys, time_window=905, window_limit=900)
     keys_state["get_follower_friends_ids"] = ResourceAllocator(num_keys, time_window=920, window_limit=15)
     keys_state["get_followers_ids"] = ResourceAllocator(num_keys, time_window=900, window_limit=15)

@@ -66,10 +66,10 @@ class TwythonConnector:
             if response.status_code == 200:
                 response = json.loads(response.text)
                 if response["status"] == 200:
-                    print("resource id : {}".format(response["id"]))
+                    # logging.info("resource id : {}".format(response["id"]))
                     return response["id"]
                 else:
-                    print("sleeping for {} seconds".format(response["wait_time"]))
+                    # print("sleeping for {} seconds".format(response["wait_time"]))
                     logging.info("sleeping for {} seconds".format(response["wait_time"]))
                     time.sleep(response["wait_time"])
 

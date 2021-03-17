@@ -2,6 +2,8 @@ import csv
 import json
 import logging
 import time
+import sys
+import os
 
 from util.util import Config, News
 
@@ -46,19 +48,22 @@ def init_config():
 
     return config, data_choices, data_features_to_collect
 
-def init_logging(config):
+def init_logging():
     format = '%(asctime)s %(process)d %(module)s %(levelname)s %(message)s'
-    # format = '%(message)s'
     logging.basicConfig(
-        filename='data_collection_{}.log'.format(str(int(time.time()))),
         level=logging.INFO,
-        format=format)
-    logging.getLogger('requests').setLevel(logging.CRITICAL)
+        handlers=[
+            logging.FileHandler('data_collection_{}.log'.format(str(int(time.time()))))
+        ],
+        format=format
+    )
+    logging.info("Started the program!")
+    # logging.getLogger('requests').setLevel(logging.INFO)
 
 
 def download_dataset():
     config, data_choices, data_features_to_collect = init_config()
-    init_logging(config)
+    init_logging()
     data_collector_factory = DataCollectorFactory(config)
 
     for feature_type in data_features_to_collect:
